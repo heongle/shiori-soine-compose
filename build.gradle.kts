@@ -46,13 +46,14 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "shiori_soine"
+            packageName = "Shiori Soine"
             packageVersion = "1.0.0"
             macOS {
                 iconFile.set(project.file("icon.icns"))
             }
             windows {
                 dirChooser = true
+                shortcut = true
                 iconFile.set(project.file("icon.ico"))
             }
             linux {
