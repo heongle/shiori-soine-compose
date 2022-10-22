@@ -1,23 +1,35 @@
 package ui
 
 import androidx.compose.runtime.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import utility.SoinePlayer
 
 @Composable
-fun rememberSoineState() = remember { SoineState() }
+fun rememberSoineState(coroutineScope: CoroutineScope = rememberCoroutineScope()) = remember {
+    SoineState(coroutineScope)
+}
 
-class SoineState {
+class SoineState(private val coroutineScope: CoroutineScope) {
     private val soinePlayer = SoinePlayer("shiori_shinnon_l.wav", "shiori_shinnon_r.wav")
+    private var loading = false
     var playing by mutableStateOf(false)
         private set
 
     fun toggleSoine() {
-        playing = if(soinePlayer.looping) {
-            soinePlayer.stop()
-            false
-        } else {
-            soinePlayer.start()
-            true
+        if (!loading) {
+            loading = true
+            coroutineScope.launch(Dispatchers.IO) {
+                playing = if(soinePlayer.looping) {
+                    soinePlayer.stop()
+                    false
+                } else {
+                    soinePlayer.start()
+                    true
+                }
+                loading = false
+            }
         }
     }
 

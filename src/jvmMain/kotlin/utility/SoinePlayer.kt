@@ -14,10 +14,10 @@ class SoinePlayer(private val soineLeft: String, private val soineRight: String)
     fun start() {
         looping = true
         val leftAudioInputStream = AudioSystem.getAudioInputStream(
-            ClassLoader.getSystemClassLoader().getResourceAsStream(soineLeft)
+            ClassLoader.getSystemClassLoader().getResource(soineLeft)
         )
         val rightAudioInputStream = AudioSystem.getAudioInputStream(
-            ClassLoader.getSystemClassLoader().getResourceAsStream(soineRight)
+            ClassLoader.getSystemClassLoader().getResource(soineRight)
         )
         soineClips[0].open(leftAudioInputStream)
         soineClips[1].open(rightAudioInputStream)
